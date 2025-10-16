@@ -17,7 +17,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: DevOps-Daily-Learning   # 👈 add this line
+        working-directory: . # 👈 add this line
 
     steps:
       - name: Checkout
