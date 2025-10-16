@@ -14,10 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
+    # Optional: you can leave defaults.run.shell here if you already have it
     defaults:
       run:
         shell: bash
-        working-directory: . # 👈 add this line
+
+    env:
+      TF_DIR: .   # 👈 if your main.tf is in repo root; change to 'DevOps-Daily-Learning' if that's where it lives
 
     steps:
       - name: Checkout
@@ -29,14 +32,14 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform -chdir="${{ env.TF_DIR }}" init
 
       - name: Terraform Format
-        run: terraform fmt -check
+        run: terraform -chdir="${{ env.TF_DIR }}" fmt -check
 
       - name: Terraform Plan
-        run: terraform plan -input=false
+        run: terraform -chdir="${{ env.TF_DIR }}" plan -input=false
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+        run: terraform -chdir="${{ env.TF_DIR }}" apply -auto-approve -input=false
