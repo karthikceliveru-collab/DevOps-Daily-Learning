@@ -14,13 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
 
-    # Optional: you can leave defaults.run.shell here if you already have it
     defaults:
       run:
         shell: bash
 
+    # main.tf is at the REPO ROOT
     env:
-      TF_DIR: .   # 👈 if your main.tf is in repo root; change to 'DevOps-Daily-Learning' if that's where it lives
+      TF_DIR: .
 
     steps:
       - name: Checkout
